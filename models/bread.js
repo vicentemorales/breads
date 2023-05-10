@@ -4,12 +4,52 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose ;
 
 //create bread schema
+
+// schema
 const breadSchema = new Schema({
   name: { type: String, required: true },
-  hasGluten: { type: Boolean },
-  image: { type: String, default: 'http://placehold.it/500x500.png' }
+  hasGluten: Boolean,
+  image: { type: String, default: 'http://placehold.it/500x500.png' },
+  baker: {
+    type: Schema.Types.ObjectID,
+    ref: 'Baker'
+  }
 })
 
+/*
+const breadSchema = new Schema({
+  name: { type: String, required: true },
+  hasGluten: Boolean,
+  image: { type: String, default: 'http://placehold.it/500x500.png' },
+  baker: {
+    type: String,
+    enum: ['Rachel', 'Monica', 'Joey', 'Chandler', 'Ross', 'Phoebe']
+  }
+})
+*/
+
+// helper methods 
+breadSchema.methods.getBakedBy = function(){
+  let bakerMessage = `${this.name} was baked with love by `;
+  if(this.baker && this.baker.name && this.baker.startDate){
+    bakerMessage += `${this.baker.name}, who has been with us since ${this.baker.startDate.getFullYear()}.`;
+  } else {
+    bakerMessage += 'an unknown baker'
+  }
+  return bakerMessage
+}
+
+/*
+// helper methods 
+breadSchema.methods.getBakedBy = function(){
+  return `${this.name} was baked with love by ${this.baker.name}, who has been with us since ${this.baker.startDate}`
+}
+*/
+/*
+breadSchema.methods.getBakedBy = function(){
+  return `${this.name} was baked with love by ${this.baker}`
+}
+*/
 
 //create bread model
 const Bread = mongoose.model('Bread', breadSchema);
@@ -19,6 +59,9 @@ module.exports = Bread;
 
 
 
+
+
+// Original Bread Models
 
 /*
 module.exports = [

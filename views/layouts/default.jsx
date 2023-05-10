@@ -6,6 +6,7 @@ function Default(html) {
       <head>
         <title>{html.title || 'Default'}</title>
         <link rel="stylesheet" href="/main.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"></link>
       </head>
       <body>
         <div className="wrapper">
